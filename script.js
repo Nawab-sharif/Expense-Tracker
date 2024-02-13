@@ -17,8 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
         expenseList.appendChild(li);
       });
     }
-  
     renderExpenses();
+
+    // Calculate total expense
+    function calculateTotalExpense() {
+      const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+      return total.toFixed(2);
+    }
+
+    // Render total expense
+    function renderTotalExpense() {
+      const totalExpenseDiv = document.getElementById('totalExpense');
+      totalExpenseDiv.innerHTML = `Total Expense: Rs. ${calculateTotalExpense()}`;
+    }
+    renderTotalExpense();
   
     // Add expense
     expenseForm.addEventListener('submit', (e) => {
@@ -29,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         expenses.push({ name, amount });
         localStorage.setItem('expenses', JSON.stringify(expenses));
         renderExpenses();
+        renderTotalExpense();
         expenseForm.reset();
       }
     });
@@ -40,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         expenses.splice(index, 1);
         localStorage.setItem('expenses', JSON.stringify(expenses));
         renderExpenses();
+        renderTotalExpense();
       }
     });
   });  
